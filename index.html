@@ -1,0 +1,1469 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python Interview Prep — Staff/Senior</title>
+<style>
+:root { --ink:#1f2328; --muted:#57606a; --line:#d0d7de; --accent:#d73a49; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin:0; color:var(--ink); background:#ffffff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-size:16px; line-height:1.6; -webkit-text-size-adjust:100%; }
+
+header.hero { background:#0d1117; color:#e6edf3; padding:44px 24px 38px; }
+header.hero .wrap { max-width:1180px; margin:0 auto; }
+header.hero h1 { margin:0; font-size:30px; color:#fff; letter-spacing:-.5px; }
+header.hero .rule { width:60px; height:4px; background:var(--accent); margin:14px 0 16px; border-radius:2px; }
+header.hero .sub { color:#8b949e; font-size:16px; }
+header.hero .meta { color:#6e7681; font-size:13px; margin-top:10px; }
+
+.layout { max-width:1180px; margin:0 auto; display:flex; gap:36px; padding:28px 24px 80px; align-items:flex-start; }
+nav.toc { width:262px; flex:0 0 262px; position:sticky; top:18px; max-height:calc(100vh - 36px);
+  overflow:auto; font-size:13.5px; border-right:1px solid #eaecef; padding-right:14px; }
+nav.toc > summary { display:none; }
+nav.toc .toctitle, nav.toc p { display:none; }
+nav.toc ul { list-style:none; margin:0; padding:0; }
+nav.toc ul ul { padding-left:12px; }
+nav.toc li { margin:2px 0; }
+nav.toc a { color:var(--muted); text-decoration:none; display:block; padding:3px 6px; border-radius:6px; }
+nav.toc a:hover { background:#f3f4f6; color:var(--ink); }
+nav.toc > ul > li > a { color:var(--ink); font-weight:600; margin-top:8px; }
+
+main { flex:1 1 auto; min-width:0; max-width:840px; }
+main h1 { font-size:25px; border-bottom:3px solid var(--accent); padding-bottom:7px;
+  margin:42px 0 16px; scroll-margin-top:14px; }
+main h1:first-child { margin-top:4px; }
+main h2 { font-size:19px; border-bottom:1px solid #eaecef; padding-bottom:5px;
+  margin:30px 0 10px; scroll-margin-top:14px; }
+main h3 { font-size:15.5px; color:#3a3f45; margin:20px 0 8px; }
+main p { margin:10px 0; }
+main a.toclink, main a.headerlink { text-decoration:none; color:inherit; }
+strong { color:#1f2328; }
+
+code { font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  font-size:.86em; background:#eff1f3; padding:.12em .4em; border-radius:5px; }
+
+.codehilite { position:relative; background:#f6f8fa; border:1px solid #d8dee4;
+  border-radius:8px; padding:14px 16px; margin:12px 0; overflow:auto; }
+.codehilite pre { margin:0; font-family:"SFMono-Regular",Consolas,Menlo,monospace;
+  font-size:13.5px; line-height:1.5; }
+.codehilite code { background:none; padding:0; font-size:13.5px; }
+.copy-btn { position:absolute; top:8px; right:8px; font-size:11px; color:#57606a;
+  background:#fff; border:1px solid #d8dee4; border-radius:6px; padding:3px 8px;
+  cursor:pointer; opacity:0; transition:opacity .12s; }
+.codehilite:hover .copy-btn { opacity:1; }
+.copy-btn.copied { color:#1a7f37; border-color:#1a7f37; }
+
+table { border-collapse:collapse; width:100%; margin:12px 0; font-size:14px; display:block; overflow-x:auto; }
+th { background:#0d1117; color:#fff; text-align:left; padding:8px 10px; white-space:nowrap; }
+td { border:1px solid #d8dee4; padding:7px 10px; vertical-align:top; }
+tr:nth-child(even) td { background:#f6f8fa; }
+
+ul { padding-left:22px; } li { margin:5px 0; }
+hr { border:0; border-top:1px solid #eaecef; margin:26px 0; }
+
+@media (max-width:900px) {
+  .layout { flex-direction:column; gap:0; padding:16px 16px 60px; }
+  nav.toc { position:static; width:100%; flex:none; max-height:none; border:1px solid var(--line);
+    border-radius:8px; padding:0 14px; margin-bottom:18px; }
+  nav.toc > summary { display:block; cursor:pointer; font-weight:600; padding:12px 0; list-style:none; }
+  nav.toc > summary::-webkit-details-marker { display:none; }
+  nav.toc > summary::after { content:"  ▾"; color:var(--muted); }
+  main h1 { font-size:22px; } header.hero h1 { font-size:24px; }
+}
+
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f6f8fa; color: #24292E }
+.codehilite .c { color: #6A737D; font-style: italic } /* Comment */
+.codehilite .err { color: #24292E } /* Error */
+.codehilite .esc { color: #24292E } /* Escape */
+.codehilite .g { color: #24292E } /* Generic */
+.codehilite .k { color: #D73A49 } /* Keyword */
+.codehilite .l { color: #24292E } /* Literal */
+.codehilite .n { color: #24292E } /* Name */
+.codehilite .o { color: #24292E } /* Operator */
+.codehilite .x { color: #24292E } /* Other */
+.codehilite .p { color: #24292E } /* Punctuation */
+.codehilite .ch { color: #6A737D; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #6A737D; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #6A737D; font-style: italic } /* Comment.Preproc */
+.codehilite .cpf { color: #6A737D; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #6A737D; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #6A737D; font-style: italic } /* Comment.Special */
+.codehilite .gd { color: #24292E } /* Generic.Deleted */
+.codehilite .ge { color: #24292E } /* Generic.Emph */
+.codehilite .ges { color: #24292E } /* Generic.EmphStrong */
+.codehilite .gr { color: #24292E } /* Generic.Error */
+.codehilite .gh { color: #24292E } /* Generic.Heading */
+.codehilite .gi { color: #24292E } /* Generic.Inserted */
+.codehilite .go { color: #24292E } /* Generic.Output */
+.codehilite .gp { color: #24292E } /* Generic.Prompt */
+.codehilite .gs { color: #24292E } /* Generic.Strong */
+.codehilite .gu { color: #24292E } /* Generic.Subheading */
+.codehilite .gt { color: #24292E } /* Generic.Traceback */
+.codehilite .kc { color: #005CC5 } /* Keyword.Constant */
+.codehilite .kd { color: #D73A49 } /* Keyword.Declaration */
+.codehilite .kn { color: #D73A49 } /* Keyword.Namespace */
+.codehilite .kp { color: #D73A49 } /* Keyword.Pseudo */
+.codehilite .kr { color: #D73A49 } /* Keyword.Reserved */
+.codehilite .kt { color: #D73A49 } /* Keyword.Type */
+.codehilite .ld { color: #24292E } /* Literal.Date */
+.codehilite .m { color: #005CC5 } /* Literal.Number */
+.codehilite .s { color: #032F62 } /* Literal.String */
+.codehilite .na { color: #24292E } /* Name.Attribute */
+.codehilite .nb { color: #6F42C1 } /* Name.Builtin */
+.codehilite .nc { color: #6F42C1 } /* Name.Class */
+.codehilite .no { color: #24292E } /* Name.Constant */
+.codehilite .nd { color: #6F42C1 } /* Name.Decorator */
+.codehilite .ni { color: #24292E } /* Name.Entity */
+.codehilite .ne { color: #24292E } /* Name.Exception */
+.codehilite .nf { color: #6F42C1 } /* Name.Function */
+.codehilite .nl { color: #24292E } /* Name.Label */
+.codehilite .nn { color: #24292E } /* Name.Namespace */
+.codehilite .nx { color: #24292E } /* Name.Other */
+.codehilite .py { color: #24292E } /* Name.Property */
+.codehilite .nt { color: #24292E } /* Name.Tag */
+.codehilite .nv { color: #24292E } /* Name.Variable */
+.codehilite .ow { color: #D73A49 } /* Operator.Word */
+.codehilite .pm { color: #24292E } /* Punctuation.Marker */
+.codehilite .w { color: #24292E } /* Text.Whitespace */
+.codehilite .mb { color: #005CC5 } /* Literal.Number.Bin */
+.codehilite .mf { color: #005CC5 } /* Literal.Number.Float */
+.codehilite .mh { color: #005CC5 } /* Literal.Number.Hex */
+.codehilite .mi { color: #005CC5 } /* Literal.Number.Integer */
+.codehilite .mo { color: #005CC5 } /* Literal.Number.Oct */
+.codehilite .sa { color: #032F62 } /* Literal.String.Affix */
+.codehilite .sb { color: #032F62 } /* Literal.String.Backtick */
+.codehilite .sc { color: #032F62 } /* Literal.String.Char */
+.codehilite .dl { color: #032F62 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #032F62; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #032F62 } /* Literal.String.Double */
+.codehilite .se { color: #032F62 } /* Literal.String.Escape */
+.codehilite .sh { color: #032F62 } /* Literal.String.Heredoc */
+.codehilite .si { color: #032F62 } /* Literal.String.Interpol */
+.codehilite .sx { color: #032F62 } /* Literal.String.Other */
+.codehilite .sr { color: #032F62 } /* Literal.String.Regex */
+.codehilite .s1 { color: #032F62 } /* Literal.String.Single */
+.codehilite .ss { color: #032F62 } /* Literal.String.Symbol */
+.codehilite .bp { color: #6F42C1 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #6F42C1 } /* Name.Function.Magic */
+.codehilite .vc { color: #24292E } /* Name.Variable.Class */
+.codehilite .vg { color: #24292E } /* Name.Variable.Global */
+.codehilite .vi { color: #24292E } /* Name.Variable.Instance */
+.codehilite .vm { color: #24292E } /* Name.Variable.Magic */
+.codehilite .il { color: #005CC5 } /* Literal.Number.Integer.Long */</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <h1>Python Interview Prep</h1>
+  <div class="rule"></div>
+  <div class="sub">Collections &middot; NeetCode Patterns &middot; Language Constructs</div>
+  <div class="meta">Staff / Senior reference &nbsp;|&nbsp; Python 3 &nbsp;|&nbsp; June 2026</div>
+</div></header>
+<div class="layout">
+  <details class="toc" open><summary>Contents</summary><div class="toc">
+<ul>
+<li><a href="#part-i-data-structures-collections">PART I — Data Structures &amp; Collections</a><ul>
+<li><a href="#1-master-complexity-table">1. Master Complexity Table</a></li>
+<li><a href="#2-list-methods-complexity">2. list — methods &amp; complexity</a></li>
+<li><a href="#3-dict-methods-complexity">3. dict — methods &amp; complexity</a></li>
+<li><a href="#4-set-frozenset-methods-complexity">4. set / frozenset — methods &amp; complexity</a></li>
+<li><a href="#5-str-key-facts">5. str — key facts</a></li>
+<li><a href="#6-collectionsdeque-methods-complexity">6. collections.deque — methods &amp; complexity</a></li>
+<li><a href="#7-collectionsdefaultdict">7. collections.defaultdict</a></li>
+<li><a href="#8-collectionscounter-methods-complexity">8. collections.Counter — methods &amp; complexity</a></li>
+<li><a href="#9-collectionsordereddict-lru-backbone">9. collections.OrderedDict — LRU backbone</a></li>
+<li><a href="#10-collectionsnamedtuple">10. collections.namedtuple</a></li>
+<li><a href="#11-heapq-functions-complexity">11. heapq — functions &amp; complexity</a></li>
+<li><a href="#12-bisect-functions-complexity">12. bisect — functions &amp; complexity</a></li>
+<li><a href="#13-third-party-sortedcontainers-deep-dive">13. THIRD-PARTY: sortedcontainers (deep dive)</a></li>
+<li><a href="#14-itertools-functools-quick-hits">14. itertools / functools quick hits</a></li>
+</ul>
+</li>
+<li><a href="#part-ii-neetcode-leetcode-patterns">PART II — NeetCode / LeetCode Patterns</a><ul>
+<li><a href="#1-arrays-hashing">1. Arrays &amp; Hashing</a></li>
+<li><a href="#2-two-pointers">2. Two Pointers</a></li>
+<li><a href="#3-sliding-window">3. Sliding Window</a></li>
+<li><a href="#4-stack-monotonic-stack">4. Stack / Monotonic Stack</a></li>
+<li><a href="#5-binary-search-search-on-answer">5. Binary Search (+ search-on-answer)</a></li>
+<li><a href="#6-linked-list">6. Linked List</a></li>
+<li><a href="#7-trees">7. Trees</a></li>
+<li><a href="#8-tries">8. Tries</a></li>
+<li><a href="#9-backtracking">9. Backtracking</a></li>
+<li><a href="#10-heap-priority-queue-top-k">10. Heap / Priority Queue / Top-K</a></li>
+<li><a href="#11-graphs-basic">11. Graphs (basic)</a></li>
+<li><a href="#12-advanced-graphs">12. Advanced Graphs</a></li>
+<li><a href="#13-1-d-dynamic-programming">13. 1-D Dynamic Programming</a></li>
+<li><a href="#14-2-d-dynamic-programming">14. 2-D Dynamic Programming</a></li>
+<li><a href="#15-greedy">15. Greedy</a></li>
+<li><a href="#16-intervals">16. Intervals</a></li>
+<li><a href="#17-bit-manipulation">17. Bit Manipulation</a></li>
+<li><a href="#18-math-geometry">18. Math &amp; Geometry</a></li>
+</ul>
+</li>
+<li><a href="#part-iii-python-language-constructs">PART III — Python Language Constructs</a><ul>
+<li><a href="#1-control-flow">1. Control Flow</a></li>
+<li><a href="#2-comprehensions">2. Comprehensions</a></li>
+<li><a href="#3-functions">3. Functions</a></li>
+<li><a href="#4-error-handling">4. Error Handling</a></li>
+<li><a href="#5-classes-oop">5. Classes / OOP</a></li>
+<li><a href="#6-iterators-generators">6. Iterators &amp; Generators</a></li>
+<li><a href="#7-decorators">7. Decorators</a></li>
+<li><a href="#8-context-managers">8. Context Managers</a></li>
+<li><a href="#9-essential-built-ins-idioms">9. Essential Built-ins &amp; Idioms</a></li>
+<li><a href="#10-type-hints-39-style">10. Type Hints (3.9+ style)</a></li>
+<li><a href="#11-python-gotchas-interview-critical">11. Python Gotchas (interview-critical)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</details>
+  <main><h1 id="part-i-data-structures-collections"><a class="toclink" href="#part-i-data-structures-collections">PART I — Data Structures &amp; Collections</a></h1>
+<h2 id="1-master-complexity-table"><a class="toclink" href="#1-master-complexity-table">1. Master Complexity Table</a></h2>
+<table>
+<thead>
+<tr>
+<th>Structure</th>
+<th>Access</th>
+<th>Search</th>
+<th>Insert</th>
+<th>Delete</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>list</code></td>
+<td>O(1)</td>
+<td>O(n)</td>
+<td>append O(1)*, insert(i) O(n)</td>
+<td>pop() O(1), pop(0) O(n)</td>
+<td>contiguous array</td>
+</tr>
+<tr>
+<td><code>dict</code></td>
+<td>O(1) avg</td>
+<td>O(1) avg</td>
+<td>O(1) avg</td>
+<td>O(1) avg</td>
+<td>insertion-ordered (3.7+)</td>
+</tr>
+<tr>
+<td><code>set</code> / <code>frozenset</code></td>
+<td>—</td>
+<td>O(1) avg</td>
+<td>O(1) avg</td>
+<td>O(1) avg</td>
+<td>hash-based, no order</td>
+</tr>
+<tr>
+<td><code>deque</code></td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>append/appendleft O(1)</td>
+<td>pop/popleft O(1)</td>
+<td>O(1) both ends</td>
+</tr>
+<tr>
+<td><code>heapq</code> (list)</td>
+<td>heap[0] O(1)</td>
+<td>O(n)</td>
+<td>heappush O(log n)</td>
+<td>heappop O(log n)</td>
+<td>heapify O(n)</td>
+</tr>
+<tr>
+<td><code>SortedList</code></td>
+<td>O(log n) by index</td>
+<td>O(log n)</td>
+<td>O(log n)</td>
+<td>O(log n)</td>
+<td>third-party; ordered</td>
+</tr>
+<tr>
+<td><code>str</code></td>
+<td>O(1)</td>
+<td>O(n)</td>
+<td>immutable</td>
+<td>immutable</td>
+<td>build via list + join</td>
+</tr>
+</tbody>
+</table>
+<p><strong>* amortized.</strong> The two facts interviewers probe: <code>list.pop(0)</code> / <code>list.insert(0, x)</code> are O(n) — use a deque; and <code>x in list</code> is O(n) while <code>x in set</code> is O(1).</p>
+<h2 id="2-list-methods-complexity"><a class="toclink" href="#2-list-methods-complexity">2. list — methods &amp; complexity</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Complexity</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>append(x)</code></td>
+<td>O(1) amortized</td>
+<td>stack push</td>
+</tr>
+<tr>
+<td><code>pop()</code></td>
+<td>O(1)</td>
+<td>stack pop</td>
+</tr>
+<tr>
+<td><code>pop(i)</code></td>
+<td>O(n)</td>
+<td>shifts tail</td>
+</tr>
+<tr>
+<td><code>insert(i, x)</code></td>
+<td>O(n)</td>
+<td>shifts tail</td>
+</tr>
+<tr>
+<td><code>remove(x)</code></td>
+<td>O(n)</td>
+<td>first match</td>
+</tr>
+<tr>
+<td><code>index(x)</code></td>
+<td>O(n)</td>
+<td>raises if absent</td>
+</tr>
+<tr>
+<td><code>count(x)</code></td>
+<td>O(n)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>x in arr</code></td>
+<td>O(n)</td>
+<td>linear scan</td>
+</tr>
+<tr>
+<td><code>sort(key=, reverse=)</code></td>
+<td>O(n log n)</td>
+<td>in place, stable (Timsort)</td>
+</tr>
+<tr>
+<td><code>reverse()</code></td>
+<td>O(n)</td>
+<td>in place</td>
+</tr>
+<tr>
+<td><code>extend(it)</code></td>
+<td>O(k)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>arr[i:j]</code></td>
+<td>O(j−i)</td>
+<td>copies</td>
+</tr>
+</tbody>
+</table>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 2D fill — NOT [[0]*cols]*rows, which aliases every row</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">cols</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">)]</span>
+
+<span class="c1"># multi-key sort, mixed direction</span>
+<span class="n">arr</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="c1"># reversed copy</span>
+<span class="n">rev</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div>
+
+<h2 id="3-dict-methods-complexity"><a class="toclink" href="#3-dict-methods-complexity">3. dict — methods &amp; complexity</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Complexity</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>d[k]</code> / <code>d[k]=v</code> / <code>del d[k]</code></td>
+<td>O(1) avg</td>
+<td></td>
+</tr>
+<tr>
+<td><code>d.get(k, default)</code></td>
+<td>O(1) avg</td>
+<td>no KeyError</td>
+</tr>
+<tr>
+<td><code>d.setdefault(k, default)</code></td>
+<td>O(1) avg</td>
+<td>group without defaultdict</td>
+</tr>
+<tr>
+<td><code>d.pop(k, default)</code></td>
+<td>O(1) avg</td>
+<td></td>
+</tr>
+<tr>
+<td><code>d.popitem()</code></td>
+<td>O(1)</td>
+<td>LIFO (3.7+)</td>
+</tr>
+<tr>
+<td><code>k in d</code></td>
+<td>O(1) avg</td>
+<td></td>
+</tr>
+<tr>
+<td><code>d.update(other)</code></td>
+<td>O(len other)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>d.keys/values/items()</code></td>
+<td>O(1) view</td>
+<td>lazy views</td>
+</tr>
+<tr>
+<td><code>d1 \| d2</code> (3.9+)</td>
+<td>O(len both)</td>
+<td>merge; <code>\|=</code> to mutate</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-set-frozenset-methods-complexity"><a class="toclink" href="#4-set-frozenset-methods-complexity">4. set / frozenset — methods &amp; complexity</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Complexity</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add(x)</code></td>
+<td>O(1) avg</td>
+<td></td>
+</tr>
+<tr>
+<td><code>remove(x)</code></td>
+<td>O(1) avg</td>
+<td>KeyError if absent</td>
+</tr>
+<tr>
+<td><code>discard(x)</code></td>
+<td>O(1) avg</td>
+<td>silent if absent</td>
+</tr>
+<tr>
+<td><code>pop()</code></td>
+<td>O(1)</td>
+<td>arbitrary element</td>
+</tr>
+<tr>
+<td><code>x in s</code></td>
+<td>O(1) avg</td>
+<td></td>
+</tr>
+<tr>
+<td><code>a \| b</code> (union)</td>
+<td>O(len a + len b)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>a &amp; b</code> (intersection)</td>
+<td>O(min(len a, len b))</td>
+<td></td>
+</tr>
+<tr>
+<td><code>a - b</code> (difference)</td>
+<td>O(len a)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>a ^ b</code> (sym. diff)</td>
+<td>O(len a + len b)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>a &lt;= b</code> (issubset)</td>
+<td>O(len a)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><code>frozenset</code> is hashable — use it as a dict key or set element (e.g. canonical visited states).</p>
+<h2 id="5-str-key-facts"><a class="toclink" href="#5-str-key-facts">5. str — key facts</a></h2>
+<p>Immutable. Building with <code>s += c</code> in a loop is O(n²); collect into a list and <code>"".join(parts)</code> for O(n). <code>ord('a')</code> / <code>chr(97)</code> for char↔int bucket counting. <code>s.split()</code>, <code>s.rsplit(maxsplit=1)</code>.</p>
+<h2 id="6-collectionsdeque-methods-complexity"><a class="toclink" href="#6-collectionsdeque-methods-complexity">6. collections.deque — methods &amp; complexity</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Complexity</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>append</code> / <code>appendleft</code></td>
+<td>O(1)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pop</code> / <code>popleft</code></td>
+<td>O(1)</td>
+<td>BFS uses popleft</td>
+</tr>
+<tr>
+<td><code>extend</code> / <code>extendleft</code></td>
+<td>O(k)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rotate(n)</code></td>
+<td>O(min(n, len))</td>
+<td></td>
+</tr>
+<tr>
+<td><code>dq[i]</code></td>
+<td>O(n)</td>
+<td>O(1) only at ends</td>
+</tr>
+<tr>
+<td><code>remove(x)</code> / <code>index(x)</code></td>
+<td>O(n)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>deque(maxlen=k)</code></td>
+<td>—</td>
+<td>auto-evicts oldest</td>
+</tr>
+</tbody>
+</table>
+<p>Use for: BFS, sliding-window, monotonic queue.</p>
+<h2 id="7-collectionsdefaultdict"><a class="toclink" href="#7-collectionsdefaultdict">7. collections.defaultdict</a></h2>
+<p>Same complexity as dict; supplies a default via a factory on missing-key access. <code>defaultdict(list)</code> for adjacency lists, <code>defaultdict(int)</code> for counting, <code>defaultdict(set)</code> for grouping. Gotcha: read access <em>creates</em> the key — use plain <code>dict.get</code> if you must not mutate.</p>
+<h2 id="8-collectionscounter-methods-complexity"><a class="toclink" href="#8-collectionscounter-methods-complexity">8. collections.Counter — methods &amp; complexity</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Complexity</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Counter(iterable)</code></td>
+<td>O(n)</td>
+<td>frequency map</td>
+</tr>
+<tr>
+<td><code>most_common(k)</code></td>
+<td>O(n log k)</td>
+<td>O(n log n) if k=None</td>
+</tr>
+<tr>
+<td><code>elements()</code></td>
+<td>O(total count)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>update</code> / <code>subtract</code></td>
+<td>O(n)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>c1 + c2</code>, <code>c1 - c2</code>, <code>c1 &amp; c2</code>, <code>c1 \| c2</code></td>
+<td>O(n)</td>
+<td>multiset arithmetic</td>
+</tr>
+<tr>
+<td><code>total()</code> (3.10+)</td>
+<td>O(n)</td>
+<td>sum of counts</td>
+</tr>
+</tbody>
+</table>
+<p><code>Counter(s1) == Counter(s2)</code> is a clean anagram check.</p>
+<h2 id="9-collectionsordereddict-lru-backbone"><a class="toclink" href="#9-collectionsordereddict-lru-backbone">9. collections.OrderedDict — LRU backbone</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Complexity</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>move_to_end(k, last=True)</code></td>
+<td>O(1)</td>
+<td>mark most-recently-used</td>
+</tr>
+<tr>
+<td><code>popitem(last=False)</code></td>
+<td>O(1)</td>
+<td>evict least-recently-used</td>
+</tr>
+<tr>
+<td>all dict ops</td>
+<td>same as dict</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="10-collectionsnamedtuple"><a class="toclink" href="#10-collectionsnamedtuple">10. collections.namedtuple</a></h2>
+<p>Immutable lightweight record; field access by name. Readable heap entries: <code>Item = namedtuple("Item", "priority node")</code>. Zero method-complexity overhead vs a plain tuple.</p>
+<h2 id="11-heapq-functions-complexity"><a class="toclink" href="#11-heapq-functions-complexity">11. heapq — functions &amp; complexity</a></h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Complexity</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>heapify(arr)</code></td>
+<td>O(n)</td>
+<td>in place, min-heap</td>
+</tr>
+<tr>
+<td><code>heappush(h, x)</code></td>
+<td>O(log n)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>heappop(h)</code></td>
+<td>O(log n)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>h[0]</code></td>
+<td>O(1)</td>
+<td>peek min</td>
+</tr>
+<tr>
+<td><code>heappushpop(h, x)</code></td>
+<td>O(log n)</td>
+<td>push then pop, one sift</td>
+</tr>
+<tr>
+<td><code>heapreplace(h, x)</code></td>
+<td>O(log n)</td>
+<td>pop then push</td>
+</tr>
+<tr>
+<td><code>nlargest/nsmallest(k, it)</code></td>
+<td>O(n log k)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>merge(*iters)</code></td>
+<td>O(n log k)</td>
+<td>merge k sorted</td>
+</tr>
+</tbody>
+</table>
+<div class="codehilite"><pre><span></span><code><span class="c1"># max-heap: negate values on the way in and out</span>
+<span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># tie-break with a counter so heap never compares the nodes themselves</span>
+<span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="n">counter</span><span class="p">),</span> <span class="n">node</span><span class="p">))</span>
+</code></pre></div>
+
+<h2 id="12-bisect-functions-complexity"><a class="toclink" href="#12-bisect-functions-complexity">12. bisect — functions &amp; complexity</a></h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Complexity</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bisect_left(a, x)</code></td>
+<td>O(log n)</td>
+<td>first index &gt;= x</td>
+</tr>
+<tr>
+<td><code>bisect_right(a, x)</code></td>
+<td>O(log n)</td>
+<td>first index &gt; x</td>
+</tr>
+<tr>
+<td><code>insort_left/right(a, x)</code></td>
+<td>O(n)</td>
+<td>log n search + O(n) shift</td>
+</tr>
+</tbody>
+</table>
+<p>Count of x in sorted <code>a</code>: <code>bisect_right(a, x) - bisect_left(a, x)</code>. The O(n) insort is exactly why repeated insertion into a sorted list is O(n²) — switch to SortedList below.</p>
+<h2 id="13-third-party-sortedcontainers-deep-dive"><a class="toclink" href="#13-third-party-sortedcontainers-deep-dive">13. THIRD-PARTY: sortedcontainers (deep dive)</a></h2>
+<p><code>pip install sortedcontainers</code> — <code>from sortedcontainers import SortedList, SortedDict, SortedSet</code></p>
+<h3 id="how-it-actually-works-the-part-that-confuses-people"><a class="toclink" href="#how-it-actually-works-the-part-that-confuses-people">How it actually works (the part that confuses people)</a></h3>
+<p>It is <strong>NOT a balanced binary search tree.</strong> Internally it is a <strong>list of sorted sublists</strong> (plus a "maxes" index of each sublist's largest element, and a positional index). To add a value: bisect the maxes to pick the target sublist (O(log(n/load))), then <code>list.insert</code> into that sublist. Sublists split/merge to stay near a load factor (default 1000).</p>
+<p>Consequence: the per-op sublist insert is technically O(√n) with a tiny constant, but bisect plus contiguous-memory C-level list ops make it <strong>faster than tree structures in CPython.</strong> For interviews, analyze add/remove/index as <strong>O(log n)</strong>, but say out loud that it's a list-of-lists, not a tree — that candor signals you actually know the library.</p>
+<h3 id="sortedlist-methods-complexity"><a class="toclink" href="#sortedlist-methods-complexity">SortedList — methods &amp; complexity</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Complexity</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add(x)</code></td>
+<td>O(log n)</td>
+<td>keeps sorted</td>
+</tr>
+<tr>
+<td><code>remove(x)</code> / <code>discard(x)</code></td>
+<td>O(log n)</td>
+<td><strong>arbitrary</strong> element removal</td>
+</tr>
+<tr>
+<td><code>pop(i=-1)</code></td>
+<td>O(log n)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>sl[i]</code></td>
+<td>O(log n)</td>
+<td>indexed access — order statistics</td>
+</tr>
+<tr>
+<td><code>bisect_left/right(x)</code></td>
+<td>O(log n)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>index(x)</code> / <code>count(x)</code></td>
+<td>O(log n)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>x in sl</code></td>
+<td>O(log n)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>irange(lo, hi)</code></td>
+<td>O(log n + k)</td>
+<td>range iteration</td>
+</tr>
+<tr>
+<td><code>update(it)</code></td>
+<td>O(k log n)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sorteddict-methods-complexity-sorted-by-key"><a class="toclink" href="#sorteddict-methods-complexity-sorted-by-key">SortedDict — methods &amp; complexity (sorted by KEY)</a></h3>
+<p>Wraps a regular dict (values) + a SortedList of keys. Value lookup is dict-fast, but key insertion/deletion pays the sorted cost.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Complexity</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sd[k]</code> (read)</td>
+<td>O(1)</td>
+<td>dict hit</td>
+</tr>
+<tr>
+<td><code>sd[k] = v</code> (new key)</td>
+<td>O(log n)</td>
+<td>insert into key list</td>
+</tr>
+<tr>
+<td><code>sd[k] = v</code> (existing)</td>
+<td>O(1)</td>
+<td>value overwrite</td>
+</tr>
+<tr>
+<td><code>del sd[k]</code></td>
+<td>O(log n)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>k in sd</code></td>
+<td>O(1)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>peekitem(i)</code></td>
+<td>O(log n)</td>
+<td>i-th smallest key</td>
+</tr>
+<tr>
+<td><code>bisect_left/right(k)</code></td>
+<td>O(log n)</td>
+<td>on KEYS, not values</td>
+</tr>
+<tr>
+<td><code>irange(lo, hi)</code></td>
+<td>O(log n + k)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sortedset-methods-complexity"><a class="toclink" href="#sortedset-methods-complexity">SortedSet — methods &amp; complexity</a></h3>
+<p>Wraps a regular set (membership) + a SortedList (order). Membership is O(1), but mutation pays the sorted cost.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Complexity</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x in ss</code></td>
+<td>O(1)</td>
+<td>backed by set</td>
+</tr>
+<tr>
+<td><code>add(x)</code></td>
+<td>O(log n)</td>
+<td>SortedList insert</td>
+</tr>
+<tr>
+<td><code>discard(x)</code> / <code>remove(x)</code></td>
+<td>O(log n)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ss[i]</code></td>
+<td>O(log n)</td>
+<td>indexed</td>
+</tr>
+<tr>
+<td><code>bisect_left/right(x)</code></td>
+<td>O(log n)</td>
+<td></td>
+</tr>
+<tr>
+<td>union / intersection / difference</td>
+<td>O(n log n)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="which-one-the-decision-that-trips-people-up"><a class="toclink" href="#which-one-the-decision-that-trips-people-up">Which one: the decision that trips people up</a></h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Gives you</th>
+<th>Cannot do</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>heapq</code></td>
+<td>O(1) peek min, O(log n) push/pop</td>
+<td>no arbitrary remove, no ordered iteration, no indexing</td>
+<td>top-K, streaming min/max, Dijkstra, merge-K</td>
+</tr>
+<tr>
+<td><code>bisect</code> + list</td>
+<td>O(log n) search</td>
+<td>O(n) insert/delete (array shift)</td>
+<td>set is static/small, or search-only</td>
+</tr>
+<tr>
+<td><code>SortedList</code></td>
+<td>O(log n) add/remove of ANY element + index + ordered iteration</td>
+<td>slightly slower constants than heapq for pure top-K</td>
+<td>dynamic ordered set: sliding-window median, kth-largest with removals, count-in-range over a changing set</td>
+</tr>
+</tbody>
+</table>
+<h3 id="common-mistakes"><a class="toclink" href="#common-mistakes">Common mistakes</a></h3>
+<ul>
+<li>Assuming heapq can remove or find an arbitrary element — it can't; you'd need lazy deletion (push <code>(value, version)</code>, skip stale entries on pop).</li>
+<li>Calling <code>bisect.insort</code> in a loop → O(n²). Use SortedList for O(n log n).</li>
+<li>Mutating an element already inside a SortedList breaks ordering — remove, change, re-add.</li>
+<li>SortedDict <code>bisect</code> works on <strong>keys</strong>, not values.</li>
+<li><strong>Availability:</strong> present on LeetCode; <strong>NOT guaranteed</strong> on CodeSignal / HackerRank / Codility. For a CodeSignal OA, prepare a heapq + lazy-deletion fallback, or hand-roll, before depending on SortedList.</li>
+</ul>
+<h2 id="14-itertools-functools-quick-hits"><a class="toclink" href="#14-itertools-functools-quick-hits">14. itertools / functools quick hits</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">accumulate</span><span class="p">,</span> <span class="n">chain</span><span class="p">,</span> <span class="n">combinations</span><span class="p">,</span> <span class="n">permutations</span><span class="p">,</span> <span class="n">product</span><span class="p">,</span> <span class="n">pairwise</span>
+
+<span class="n">accumulate</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>             <span class="c1"># running prefix sums          O(n)</span>
+<span class="n">accumulate</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="nb">max</span><span class="p">)</span>        <span class="c1"># running max</span>
+<span class="n">pairwise</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>                <span class="c1"># adjacent pairs (3.10+)</span>
+<span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># flattened nested loops / bitmask generation</span>
+<span class="n">combinations</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">permutations</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+<span class="n">chain</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>                  <span class="c1"># lazily concatenate iterables</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache</span><span class="p">,</span> <span class="n">lru_cache</span><span class="p">,</span> <span class="n">reduce</span><span class="p">,</span> <span class="n">cmp_to_key</span>
+
+<span class="nd">@cache</span>                       <span class="c1"># top-down DP memoization (3.9+); lru_cache(None) pre-3.9</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">dp</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="nb">sorted</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="n">my_cmp</span><span class="p">))</span>   <span class="c1"># custom 3-way comparator</span>
+</code></pre></div>
+
+<h1 id="part-ii-neetcode-leetcode-patterns"><a class="toclink" href="#part-ii-neetcode-leetcode-patterns">PART II — NeetCode / LeetCode Patterns</a></h1>
+<p>Each: <strong>Cue</strong> (when to reach for it) · template · complexity · representative problems.</p>
+<h2 id="1-arrays-hashing"><a class="toclink" href="#1-arrays-hashing">1. Arrays &amp; Hashing</a></h2>
+<p><strong>Cue:</strong> counts, dedup, "have I seen this?". <strong>O(n) time / O(n) space.</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">seen</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">target</span> <span class="o">-</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">seen</span><span class="p">[</span><span class="n">target</span> <span class="o">-</span> <span class="n">x</span><span class="p">],</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">seen</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+</code></pre></div>
+
+<p><em>Two Sum, Group Anagrams, Top-K Frequent, Contains Duplicate, Valid Anagram, Product of Array Except Self, Valid Sudoku, Longest Consecutive Sequence.</em></p>
+<h2 id="2-two-pointers"><a class="toclink" href="#2-two-pointers">2. Two Pointers</a></h2>
+<p><strong>Cue:</strong> sorted input; pair/triplet; palindrome; in-place dedup. <strong>O(n) after sort.</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">:</span>
+        <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+</code></pre></div>
+
+<p><em>Valid Palindrome, Two Sum II, 3Sum, Container With Most Water, Trapping Rain Water.</em></p>
+<h2 id="3-sliding-window"><a class="toclink" href="#3-sliding-window">3. Sliding Window</a></h2>
+<p><strong>Cue:</strong> longest/shortest contiguous subarray or substring meeting a constraint. <strong>O(n).</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">window</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">window</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="c1"># shrink from the left until the window is valid again</span>
+    <span class="k">while</span> <span class="n">violates</span><span class="p">(</span><span class="n">window</span><span class="p">):</span>
+        <span class="n">window</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]]</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">best</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">best</span><span class="p">,</span> <span class="n">r</span> <span class="o">-</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Fixed-size variant: slide a width-k frame, add <code>nums[r]</code>, drop <code>nums[r-k]</code>. <em>Best Time to Buy/Sell Stock, Longest Substring Without Repeating, Longest Repeating Char Replacement, Permutation in String, Minimum Window Substring, Sliding Window Maximum (monotonic deque).</em></p>
+<h2 id="4-stack-monotonic-stack"><a class="toclink" href="#4-stack-monotonic-stack">4. Stack / Monotonic Stack</a></h2>
+<p><strong>Cue:</strong> matching/balancing; "next greater/smaller"; histogram spans. <strong>O(n).</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># holds indices, values increasing</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">ans</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">j</span>        <span class="c1"># distance to next greater</span>
+    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</code></pre></div>
+
+<p><em>Valid Parentheses, Min Stack, Evaluate RPN, Generate Parentheses, Daily Temperatures, Car Fleet, Largest Rectangle in Histogram.</em></p>
+<h2 id="5-binary-search-search-on-answer"><a class="toclink" href="#5-binary-search-search-on-answer">5. Binary Search (+ search-on-answer)</a></h2>
+<p><strong>Cue:</strong> sorted array; OR "minimize the max / maximize the min / find a threshold". <strong>O(log n)</strong> or <strong>O(n log range).</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">min_ans</span><span class="p">,</span> <span class="n">max_ans</span>     <span class="c1"># search on the answer space</span>
+
+<span class="k">while</span> <span class="n">lo</span> <span class="o">&lt;</span> <span class="n">hi</span><span class="p">:</span>
+    <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">lo</span> <span class="o">+</span> <span class="n">hi</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="k">if</span> <span class="n">feasible</span><span class="p">(</span><span class="n">mid</span><span class="p">):</span>
+        <span class="n">hi</span> <span class="o">=</span> <span class="n">mid</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">lo</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">return</span> <span class="n">lo</span>
+</code></pre></div>
+
+<p><em>Binary Search, Search a 2D Matrix, Koko Eating Bananas, Find Minimum in Rotated, Search in Rotated, Time-Based Key-Value Store, Median of Two Sorted Arrays.</em></p>
+<h2 id="6-linked-list"><a class="toclink" href="#6-linked-list">6. Linked List</a></h2>
+<p><strong>Cue:</strong> cycle, middle, reorder, merge, k-group reversal. <strong>O(n) / O(1) space.</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># in-place reversal</span>
+<span class="n">prev</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">while</span> <span class="n">head</span><span class="p">:</span>
+    <span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="p">,</span> <span class="n">prev</span><span class="p">,</span> <span class="n">head</span> <span class="o">=</span> <span class="n">prev</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span>
+
+<span class="c1"># fast/slow for cycle or middle</span>
+<span class="n">slow</span> <span class="o">=</span> <span class="n">fast</span> <span class="o">=</span> <span class="n">head</span>
+<span class="k">while</span> <span class="n">fast</span> <span class="ow">and</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
+    <span class="n">slow</span> <span class="o">=</span> <span class="n">slow</span><span class="o">.</span><span class="n">next</span>
+    <span class="n">fast</span> <span class="o">=</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span>
+</code></pre></div>
+
+<p><em>Reverse Linked List, Merge Two Lists, Linked List Cycle, Reorder List, Remove Nth From End, Copy List w/ Random Pointer, Add Two Numbers, LRU Cache, Merge K Sorted Lists, Reverse Nodes in k-Group.</em></p>
+<h2 id="7-trees"><a class="toclink" href="#7-trees">7. Trees</a></h2>
+<p><strong>Cue:</strong> traversal, path/depth, BST invariant. <strong>O(n).</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># depth / path aggregation</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">dfs</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">),</span> <span class="n">dfs</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">))</span>
+
+<span class="c1"># BFS level-order</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="n">root</span><span class="p">])</span>
+<span class="k">while</span> <span class="n">q</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">right</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</code></pre></div>
+
+<p><em>Invert Tree, Max Depth, Diameter, Balanced Tree, Same/Subtree, LCA of BST, Level Order, Right Side View, Count Good Nodes, Validate BST, Kth Smallest in BST, Construct from Preorder/Inorder, Serialize/Deserialize.</em></p>
+<h2 id="8-tries"><a class="toclink" href="#8-tries">8. Tries</a></h2>
+<p><strong>Cue:</strong> prefix search, word dictionary, autocomplete. <strong>O(L) per op.</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">root</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>                      <span class="c1"># insert</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">root</span>
+    <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">w</span><span class="p">:</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">node</span><span class="p">[</span><span class="s1">&#39;$&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>                 <span class="c1"># end-of-word marker</span>
+</code></pre></div>
+
+<p><em>Implement Trie, Design Add and Search Words, Word Search II.</em></p>
+<h2 id="9-backtracking"><a class="toclink" href="#9-backtracking">9. Backtracking</a></h2>
+<p><strong>Cue:</strong> "all subsets/permutations/combinations"; constraint satisfaction. <strong>Exponential, pruned.</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">bt</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">[:])</span>              <span class="c1"># record (or check goal)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">invalid</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+            <span class="k">continue</span>                 <span class="c1"># prune</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">bt</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>                   <span class="c1"># undo</span>
+</code></pre></div>
+
+<p><em>Subsets (I/II), Combination Sum (I/II), Permutations, Word Search, Palindrome Partitioning, Letter Combinations, N-Queens.</em></p>
+<h2 id="10-heap-priority-queue-top-k"><a class="toclink" href="#10-heap-priority-queue-top-k">10. Heap / Priority Queue / Top-K</a></h2>
+<p><strong>Cue:</strong> k largest/smallest; merge-k; streaming median; schedule by frequency. <strong>O(n log k).</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># two-heap running median (small = max-heap, large = min-heap)</span>
+<span class="n">small</span><span class="p">,</span> <span class="n">large</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">small</span><span class="p">,</span> <span class="o">-</span><span class="n">heapq</span><span class="o">.</span><span class="n">heappushpop</span><span class="p">(</span><span class="n">large</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">small</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">large</span><span class="p">):</span>
+        <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">large</span><span class="p">,</span> <span class="o">-</span><span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">small</span><span class="p">))</span>
+</code></pre></div>
+
+<p><em>Kth Largest in a Stream, Last Stone Weight, K Closest Points, Kth Largest Element (or quickselect), Task Scheduler, Design Twitter, Find Median from Data Stream.</em></p>
+<h2 id="11-graphs-basic"><a class="toclink" href="#11-graphs-basic">11. Graphs (basic)</a></h2>
+<p><strong>Cue:</strong> grid islands, connectivity, components, cycle detection. <strong>O(V + E).</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Union-Find with path compression</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">x</span> <span class="o">!=</span> <span class="n">par</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span>
+        <span class="n">par</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">par</span><span class="p">[</span><span class="n">par</span><span class="p">[</span><span class="n">x</span><span class="p">]]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">par</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">union</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">ra</span><span class="p">,</span> <span class="n">rb</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">find</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ra</span> <span class="o">==</span> <span class="n">rb</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">par</span><span class="p">[</span><span class="n">ra</span><span class="p">]</span> <span class="o">=</span> <span class="n">rb</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</code></pre></div>
+
+<p><em>Number of Islands, Max Area of Island, Clone Graph, Pacific Atlantic, Surrounded Regions, Rotting Oranges, Walls and Gates, Course Schedule (I/II), Redundant Connection, Number of Connected Components, Graph Valid Tree, Word Ladder.</em></p>
+<h2 id="12-advanced-graphs"><a class="toclink" href="#12-advanced-graphs">12. Advanced Graphs</a></h2>
+<p><strong>Cue:</strong> weighted shortest path, dependency ordering, min spanning tree. <strong>O(E log V).</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Dijkstra</span>
+<span class="n">pq</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="n">src</span><span class="p">)]</span>
+<span class="n">dist</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">while</span> <span class="n">pq</span><span class="p">:</span>
+    <span class="n">d</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">pq</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">dist</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span>
+    <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dist</span><span class="p">:</span>
+            <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">pq</span><span class="p">,</span> <span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="n">w</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+</code></pre></div>
+
+<p>Kahn's topo sort: BFS over nodes with indegree 0 using a deque. <em>Network Delay Time, Reconstruct Itinerary, Min Cost to Connect Points (MST), Swim in Rising Water, Alien Dictionary (topo), Cheapest Flights within K Stops (Bellman-Ford).</em></p>
+<h2 id="13-1-d-dynamic-programming"><a class="toclink" href="#13-1-d-dynamic-programming">13. 1-D Dynamic Programming</a></h2>
+<p><strong>Cue:</strong> "ways to"; max/min along a sequence; subsequence. <strong>O(n) or O(n·target).</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># House Robber shape</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">val</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</code></pre></div>
+
+<p><em>Climbing Stairs, House Robber (I/II), Longest Palindromic Substring, Palindromic Substrings, Decode Ways, Coin Change, Maximum Product Subarray, Word Break, Longest Increasing Subsequence, Partition Equal Subset Sum.</em></p>
+<h2 id="14-2-d-dynamic-programming"><a class="toclink" href="#14-2-d-dynamic-programming">14. 2-D Dynamic Programming</a></h2>
+<p><strong>Cue:</strong> two strings; grid paths; knapsack; interval DP. <strong>O(m·n).</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Longest Common Subsequence</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">b</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+            <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+</code></pre></div>
+
+<p>Interval DP (solve inner ranges first): the family of <strong>Burst Balloons</strong> and the card-picking game — iterate by length, then by left endpoint, choosing the partition point. <em>Unique Paths, Longest Common Subsequence, Buy/Sell with Cooldown, Coin Change II, Target Sum, Interleaving String, Longest Increasing Path in Matrix, Distinct Subsequences, Edit Distance, Burst Balloons, Regular Expression Matching.</em></p>
+<h2 id="15-greedy"><a class="toclink" href="#15-greedy">15. Greedy</a></h2>
+<p><strong>Cue:</strong> intervals; jumps; "minimum number of"; local choice provably global. <strong>O(n log n) (sort).</strong></p>
+<p><em>Maximum Subarray (Kadane), Jump Game (I/II), Gas Station, Hand of Straights, Merge Triplets to Form Target, Partition Labels, Valid Parenthesis String.</em></p>
+<h2 id="16-intervals"><a class="toclink" href="#16-intervals">16. Intervals</a></h2>
+<p><strong>Cue:</strong> meetings, merge, overlap counting. <strong>O(n log n).</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">intervals</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="n">merged</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">merged</span> <span class="ow">and</span> <span class="n">s</span> <span class="o">&lt;=</span> <span class="n">merged</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">merged</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">e</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">])</span>
+</code></pre></div>
+
+<p>Min meeting rooms: min-heap of end times. <em>Insert Interval, Merge Intervals, Non-overlapping Intervals, Meeting Rooms (I/II), Minimum Interval to Include Each Query.</em></p>
+<h2 id="17-bit-manipulation"><a class="toclink" href="#17-bit-manipulation">17. Bit Manipulation</a></h2>
+<p><strong>Cue:</strong> single number; count bits; subset enumeration via bitmask. <strong>O(n) or O(n·bits).</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">x</span> <span class="o">^=</span> <span class="n">num</span>            <span class="c1"># XOR cancels pairs</span>
+<span class="n">count</span> <span class="o">+=</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="mi">1</span>      <span class="c1"># inspect lowest bit</span>
+<span class="n">n</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>             <span class="c1"># shift right</span>
+<span class="n">n</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>        <span class="c1"># drop the lowest set bit</span>
+</code></pre></div>
+
+<p><em>Single Number, Number of 1 Bits, Counting Bits, Reverse Bits, Missing Number, Sum of Two Integers, Reverse Integer.</em></p>
+<h2 id="18-math-geometry"><a class="toclink" href="#18-math-geometry">18. Math &amp; Geometry</a></h2>
+<p><strong>Cue:</strong> in-place matrix ops; overflow handling; gcd; prefix products.</p>
+<p><em>Rotate Image, Spiral Matrix, Set Matrix Zeroes, Happy Number, Plus One, Pow(x, n), Multiply Strings, Detect Squares.</em></p>
+<h1 id="part-iii-python-language-constructs"><a class="toclink" href="#part-iii-python-language-constructs">PART III — Python Language Constructs</a></h1>
+<h2 id="1-control-flow"><a class="toclink" href="#1-control-flow">1. Control Flow</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="o">...</span>
+<span class="k">elif</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="o">...</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="o">...</span>
+
+<span class="n">val</span> <span class="o">=</span> <span class="n">a</span> <span class="k">if</span> <span class="n">cond</span> <span class="k">else</span> <span class="n">b</span>                 <span class="c1"># ternary</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>   <span class="c1"># index + value</span>
+    <span class="o">...</span>
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">):</span>               <span class="c1"># parallel iterate</span>
+    <span class="o">...</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="o">...</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>         <span class="c1"># reverse range</span>
+    <span class="o">...</span>
+
+<span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+    <span class="o">...</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">seq</span><span class="p">:</span>                          <span class="c1"># loop-else: runs only if NO break</span>
+    <span class="k">if</span> <span class="n">found</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">handle_not_found</span><span class="p">()</span>
+
+<span class="k">match</span> <span class="n">cmd</span><span class="p">:</span>                             <span class="c1"># structural pattern matching (3.10+)</span>
+    <span class="k">case</span> <span class="s2">&quot;start&quot;</span><span class="p">:</span>
+        <span class="o">...</span>
+    <span class="k">case</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]:</span>                       <span class="c1"># sequence destructure</span>
+        <span class="o">...</span>
+    <span class="k">case</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">t</span><span class="p">}:</span>                  <span class="c1"># mapping match</span>
+        <span class="o">...</span>
+    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>                            <span class="c1"># default</span>
+        <span class="o">...</span>
+</code></pre></div>
+
+<h2 id="2-comprehensions"><a class="toclink" href="#2-comprehensions">2. Comprehensions</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="n">squares</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">]</span>
+<span class="n">evens</span>   <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">grid</span>    <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">cols</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">)]</span>   <span class="c1"># 2D (not [[0]*cols]*rows)</span>
+<span class="n">pairs</span>   <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">items</span><span class="p">}</span>            <span class="c1"># dict comp</span>
+<span class="n">uniq</span>    <span class="o">=</span> <span class="p">{</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">}</span>                   <span class="c1"># set comp</span>
+<span class="n">gen</span>     <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">)</span>               <span class="c1"># lazy generator expr</span>
+<span class="n">flat</span>    <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>  <span class="c1"># nested (outer loop first)</span>
+</code></pre></div>
+
+<h2 id="3-functions"><a class="toclink" href="#3-functions">3. Functions</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>        <span class="c1"># positional, default, varargs, kwargs</span>
+    <span class="o">...</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">g</span><span class="p">(</span><span class="n">acc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>                       <span class="c1"># AVOID mutable default (acc=[] persists)</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">acc</span> <span class="k">if</span> <span class="n">acc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
+
+<span class="n">square</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>               <span class="c1"># anonymous</span>
+<span class="n">q</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>                   <span class="c1"># multiple returns via tuple unpack</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">make_counter</span><span class="p">():</span>                    <span class="c1"># closure + nonlocal</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inc</span><span class="p">():</span>
+        <span class="k">nonlocal</span> <span class="n">count</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">count</span>
+    <span class="k">return</span> <span class="n">inc</span>
+</code></pre></div>
+
+<h2 id="4-error-handling"><a class="toclink" href="#4-error-handling">4. Error Handling</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">risky</span><span class="p">()</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>    <span class="c1"># catch specific, grouped</span>
+    <span class="n">handle</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">log</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="k">raise</span>                              <span class="c1"># re-raise same exception</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">on_success</span><span class="p">()</span>                       <span class="c1"># runs only if no exception</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">cleanup</span><span class="p">()</span>                          <span class="c1"># always runs</span>
+
+<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;bad input&quot;</span><span class="p">)</span>
+<span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;wrap&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>      <span class="c1"># exception chaining</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TaskNotFound</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>         <span class="c1"># custom exception</span>
+    <span class="k">pass</span>
+
+<span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;n must be non-negative&quot;</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Exception</th>
+<th>Raised when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IndexError</code></td>
+<td>list/sequence index out of range</td>
+</tr>
+<tr>
+<td><code>KeyError</code></td>
+<td>missing dict key</td>
+</tr>
+<tr>
+<td><code>ValueError</code></td>
+<td>right type, bad value (e.g. <code>int("x")</code>)</td>
+</tr>
+<tr>
+<td><code>TypeError</code></td>
+<td>wrong type / bad operands</td>
+</tr>
+<tr>
+<td><code>StopIteration</code></td>
+<td>iterator exhausted (next past end)</td>
+</tr>
+<tr>
+<td><code>ZeroDivisionError</code></td>
+<td><code>/</code> or <code>%</code> by zero</td>
+</tr>
+<tr>
+<td><code>AttributeError</code></td>
+<td>missing attribute/method</td>
+</tr>
+<tr>
+<td><code>RecursionError</code></td>
+<td>recursion depth exceeded (~1000)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>EAFP &gt; LBYL in Python:</strong> prefer try/except over pre-checking (e.g. <code>try: d[k] except KeyError</code> rather than <code>if k in d</code>), except in tight loops where the exception path is hot.</p>
+<h2 id="5-classes-oop"><a class="toclink" href="#5-classes-oop">5. Classes / OOP</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Node</span><span class="p">:</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;val&quot;</span><span class="p">,</span> <span class="s2">&quot;nxt&quot;</span><span class="p">)</span>         <span class="c1"># no __dict__: less memory, faster attr</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">nxt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nxt</span> <span class="o">=</span> <span class="n">nxt</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                <span class="c1"># debug-friendly</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Node(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">val</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>           <span class="c1"># enables heap / sort of objects</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">val</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">val</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                <span class="c1"># define with __eq__ to use as set/dict key</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Dunder methods worth knowing:</strong> <code>__init__</code>, <code>__repr__</code>/<code>__str__</code>, <code>__eq__</code>+<code>__hash__</code> (hashable key), <code>__lt__</code> (heap/sort), <code>__len__</code>, <code>__getitem__</code>/<code>__setitem__</code>, <code>__contains__</code> (the <code>in</code> operator), <code>__iter__</code>/<code>__next__</code>, <code>__call__</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Account</span><span class="p">:</span>
+    <span class="n">bank</span> <span class="o">=</span> <span class="s2">&quot;Acme&quot;</span>                      <span class="c1"># class attr (shared across instances)</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bal</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bal</span> <span class="o">=</span> <span class="n">bal</span>                 <span class="c1"># instance attr</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">doubled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                 <span class="c1"># computed, accessed as attr (no parens)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bal</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_cents</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>            <span class="c1"># alternate constructor</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">c</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fee</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>                        <span class="c1"># no self / cls</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="mf">0.01</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Savings</span><span class="p">(</span><span class="n">Account</span><span class="p">):</span>                <span class="c1"># inheritance</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bal</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">=</span> <span class="n">rate</span>
+</code></pre></div>
+
+<p><code>dataclass</code> auto-generates init/repr/eq, and order/lt with <code>order=True</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Point</span><span class="p">:</span>
+    <span class="n">x</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">y</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>   <span class="c1"># mutable default, done safely</span>
+</code></pre></div>
+
+<p>Abstract base classes &amp; Enum (your Strategy-pattern / sealed-interface designs map here):</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">PricingStrategy</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">price</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="o">...</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Status</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">OPEN</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">CLOSED</span> <span class="o">=</span> <span class="mi">2</span>
+</code></pre></div>
+
+<h2 id="6-iterators-generators"><a class="toclink" href="#6-iterators-generators">6. Iterators &amp; Generators</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">squares</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span>                    <span class="c1"># lazy: produces one at a time</span>
+
+<span class="k">yield from</span> <span class="n">other_gen</span><span class="p">()</span>                 <span class="c1"># delegate to a sub-generator</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CountUp</span><span class="p">:</span>                         <span class="c1"># manual iterator protocol</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">StopIteration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
+</code></pre></div>
+
+<h2 id="7-decorators"><a class="toclink" href="#7-decorators">7. Decorators</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span><span class="p">,</span> <span class="n">cache</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">logged</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>                         <span class="c1"># preserves name / docstring</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@cache</span>                                 <span class="c1"># memoize -&gt; top-down DP</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+
+<h2 id="8-context-managers"><a class="toclink" href="#8-context-managers">8. Context Managers</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;file.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>            <span class="c1"># auto-closes even on exception</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
+
+<span class="nd">@contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">managed</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
+    <span class="n">acquire</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">res</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">release</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>                   <span class="c1"># guaranteed cleanup</span>
+</code></pre></div>
+
+<h2 id="9-essential-built-ins-idioms"><a class="toclink" href="#9-essential-built-ins-idioms">9. Essential Built-ins &amp; Idioms</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="nb">enumerate</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span>        <span class="c1"># index + value</span>
+<span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>                    <span class="c1"># parallel iterate</span>
+<span class="nb">reversed</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+<span class="nb">sorted</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">min</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">max</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">any</span><span class="p">(</span><span class="n">conds</span><span class="p">)</span>                   <span class="c1"># short-circuits</span>
+<span class="nb">all</span><span class="p">(</span><span class="n">conds</span><span class="p">)</span>
+<span class="nb">sum</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span>
+<span class="nb">map</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">seq</span><span class="p">)</span>
+<span class="nb">filter</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">seq</span><span class="p">)</span>
+
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span>                  <span class="c1"># swap, no temp</span>
+<span class="n">first</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span> <span class="o">=</span> <span class="n">seq</span>           <span class="c1"># extended unpacking</span>
+<span class="o">*</span><span class="n">init</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">seq</span>
+
+<span class="n">INF</span><span class="p">,</span> <span class="n">NINF</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
+<span class="n">val</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">sentinel</span><span class="p">)</span>     <span class="c1"># safe next, no StopIteration</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="n">m</span> <span class="o">:=</span> <span class="n">compute</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>     <span class="c1"># walrus := assigns inside an expression (3.8+)</span>
+    <span class="n">use</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">setrecursionlimit</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">6</span><span class="p">)</span>  <span class="c1"># deep DFS</span>
+</code></pre></div>
+
+<h2 id="10-type-hints-39-style"><a class="toclink" href="#10-type-hints-39-style">10. Type Hints (3.9+ style)</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">topk</span><span class="p">(</span><span class="n">xs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="o">...</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>   <span class="c1"># union / optional</span>
+    <span class="o">...</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Callable</span>    <span class="c1"># Optional[int] == int | None</span>
+<span class="n">handler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span>
+</code></pre></div>
+
+<h2 id="11-python-gotchas-interview-critical"><a class="toclink" href="#11-python-gotchas-interview-critical">11. Python Gotchas (interview-critical)</a></h2>
+<ul>
+<li><strong>Mutable default args</strong> persist across calls — use a <code>None</code> sentinel, then assign inside.</li>
+<li><strong>Late-binding closures:</strong> <code>[lambda: i for i in range(3)]</code> all return 2. Bind early: <code>lambda i=i: i</code>.</li>
+<li><strong><code>is</code> vs <code>==</code>:</strong> <code>is</code> is identity; use it only for <code>is None</code>. Compare values with <code>==</code>.</li>
+<li><strong>Shallow copy:</strong> nested lists share references; use <code>copy.deepcopy</code> for independent nesting.</li>
+<li><strong>Floor division:</strong> <code>//</code> rounds toward −∞ (<code>-7 // 2 == -4</code>); use <code>int(a / b)</code> to truncate.</li>
+<li><strong>defaultdict</strong> read access creates the key — use plain <code>dict.get</code> when you must not mutate.</li>
+<li><strong>Recursion limit ~1000</strong> — raise it or convert deep recursion to iterative with an explicit stack.</li>
+<li><strong>String concat in a loop</strong> is O(n²) — collect into a list and <code>"".join(...)</code>.</li>
+</ul></main>
+</div>
+<script>
+document.querySelectorAll('.codehilite').forEach(function(box){
+  var b=document.createElement('button'); b.className='copy-btn'; b.textContent='Copy';
+  b.addEventListener('click',function(){
+    var t=box.querySelector('pre').innerText;
+    navigator.clipboard.writeText(t).then(function(){
+      b.textContent='Copied'; b.classList.add('copied');
+      setTimeout(function(){b.textContent='Copy'; b.classList.remove('copied');},1200);
+    });
+  });
+  box.appendChild(b);
+});
+</script>
+</body>
+</html>
